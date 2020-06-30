@@ -1,0 +1,12 @@
+{
+	"player": {
+		"fest_id": "your_fest_player_account_id",
+		"token": "your_fest_account_token"
+	},
+	"bot_configurations": {
+		"auto_claim_tourneys": true,
+		"auto_evolve": true,
+		"spare_turbo_bikes": true,
+		"play_before_end_in_seconds": 180
+	}
+}
