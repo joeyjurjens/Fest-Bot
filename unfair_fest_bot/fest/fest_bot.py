@@ -113,7 +113,7 @@ class FestBot(object):
                         if current_best_time is not None:
                             # If best time is zero, it means there are no times set & we don't want to submit times <= 0
                             if int(current_best_time) > 0:
-                                my_time = int(current_best_time) - random.uniform(0.001, 0.01)
+                                my_time = int(current_best_time) - random.uniform(0.0001, 0.001)
                             else:
                                 my_time = 100
 
