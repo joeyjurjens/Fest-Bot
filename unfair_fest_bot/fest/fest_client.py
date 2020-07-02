@@ -24,7 +24,6 @@ class FestClient:
         }
 
     # This API call retrieves ALL information about all bikes/parts in Fest.
-    # I'm also storing this inside a file, as this API call always returns the same data.
     def get_items(self):
         url = self.base_url + "items"
         return self.get(url)
