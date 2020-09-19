@@ -28,10 +28,19 @@ class FestClient:
         url = self.base_url + "items"
         return self.get(url)
 
-    def get(self, url):
-        response = None        
+    def make_request(self, method, url, data=None):
         try:
-            response = requests.get(url, headers=self.headers)
+            if method == "get":
+                response = requests.get(url, headers=self.headers)
+            elif method == "delete":
+                response = requests.delete(url, headers=self.headers)
+            elif method == "post":
+                response = requests.post(url, headers=self.headers, json=data)
+            elif method == "put":
+                response = requests.put(url, headers=self.headers, json=data)
+            else:
+                response = None
+
             response.raise_for_status()
         except requests.exceptions.HTTPError as e:
             print("HTTPError: {} - for URL: {}".format(e, url))
@@ -44,62 +53,17 @@ class FestClient:
 
         try:
             return response.json()
-        except json.decoder.JSONDecodeError as e:
+        except:
             return response
+
+    def get(self, url):
+        return self.make_request("get", url)
 
     def delete(self, url):
-        response = None        
-        try:
-            response = requests.delete(url, headers=self.headers)
-            response.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            print("HTTPError: {} - for URL: {}".format(e, url))
-        except requests.exceptions.RequestException as e:
-            print(
-                "Exception while trying to make request: {} - for URL: {}".format(
-                    e, url
-                )
-            )
-
-        try:
-            return response.json()
-        except json.decoder.JSONDecodeError as e:
-            return response
+        return self.make_request("delete", url)
 
     def post(self, url, data=None):
-        response = None        
-        try:
-            response = requests.post(url, headers=self.headers, json=data)
-            response.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            print("HTTPError: {} - for URL: {}".format(e, url))
-        except requests.exceptions.RequestException as e:
-            print(
-                "Exception while trying to make request: {} - for URL: {}".format(
-                    e, url
-                )
-            )
-
-        try:
-            return response.json()
-        except json.decoder.JSONDecodeError as e:
-            return response
+        return self.make_request("post", url, data)
 
     def put(self, url, data=None):
-        response = None
-        try:
-            response = requests.put(url, headers=self.headers, json=data)
-            response.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            print("HTTPError: {} - for URL: {}".format(e, url))
-        except requests.exceptions.RequestException as e:
-            print(
-                "Exception while trying to make request: {} - for URL: {}".format(
-                    e, url
-                )
-            )
-
-        try:
-            return response.json()
-        except json.decoder.JSONDecodeError as e:
-            return response
+        return self.make_request("put", url, data)
